@@ -1,0 +1,2 @@
+module OctopusHelper
+end
