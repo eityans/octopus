@@ -19,7 +19,7 @@ class OctopusController < ApplicationController
 
   def index
     p OctopusGraphql::Client.query(QUERY::HalfHourlyReadings, variables: {
-      accountNumber: ENV['ACCOUNT_NUMBER'],
+      accountNumber: ENV['OCTOPUS_ACCOUNT_NUMBER'],
       fromDatetime: "2022-08-14T15:00:00.000Z",
       toDatetime: "2022-12-14T17:00:00.000Z"
     })
