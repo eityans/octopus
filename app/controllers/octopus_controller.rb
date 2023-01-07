@@ -27,8 +27,8 @@ class OctopusController < ApplicationController
     properties = res.original_hash.dig("data", "account", "properties")
     electricitySupplyPoints = properties.first["electricitySupplyPoints"]
     halfHourlyReadings = electricitySupplyPoints.first["halfHourlyReadings"]
-    @start_at = halfHourlyReadings.pluck("startAt").min.to_time.localtime.strftime("%Y/%m/%d %H:%M")
-    @end_at = halfHourlyReadings.pluck("endAt").max.to_time.localtime.strftime("%Y/%m/%d %H:%M")
+    @start_at = Time.zone.parse(halfHourlyReadings.pluck("startAt").min).strftime("%Y/%m/%d %H:%M")
+    @end_at = Time.zone.parse(halfHourlyReadings.pluck("endAt").max).strftime("%Y/%m/%d %H:%M")
     @kwh = halfHourlyReadings.pluck("value").map(&:to_f).sum
     @cost = halfHourlyReadings.pluck("costEstimate").map(&:to_i).sum
   end
