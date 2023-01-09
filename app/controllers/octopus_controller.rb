@@ -31,6 +31,23 @@ class OctopusController < ApplicationController
     @end_at = Time.zone.parse(halfHourlyReadings.pluck("endAt").max).strftime("%Y/%m/%d %H:%M")
     @kwh = halfHourlyReadings.pluck("value").map(&:to_f).sum
     @cost = halfHourlyReadings.pluck("costEstimate").map(&:to_i).sum
+    send_line_message
+  end
+
+  private
+
+  def send_line_message
+    message = {
+      type: 'text',
+      text: 'hello'
+    }
+
+    client = Line::Bot::Client.new do |config|
+      config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
+      config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
+    end
+
+    client.broadcast(message)
   end
 end
 
