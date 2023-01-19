@@ -5,7 +5,7 @@ class OctopusController < ApplicationController
       account(accountNumber: $accountNumber) {
         properties {
           electricitySupplyPoints {
-            halfHourlyReadings(fromDatetime: $fromDatetime, toDatetime: $toDatetime) {
+            halfHourlyReadings(fromDatetime: $fromDatetime, toDatetime: $toDatetime, productCode: "JPN_GREEN_OCTOPUS_APR_01") {
               startAt
               endAt
               version
@@ -45,6 +45,7 @@ class OctopusController < ApplicationController
       fromDatetime: Date.yesterday.beginning_of_day.iso8601,
       toDatetime: Date.yesterday.end_of_day.iso8601
     })
+
     properties = res.original_hash.dig("data", "account", "properties")
     electricitySupplyPoints = properties.first["electricitySupplyPoints"]
     halfHourlyReadings = electricitySupplyPoints.first["halfHourlyReadings"]
