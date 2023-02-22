@@ -54,11 +54,7 @@ class OctopusController < ApplicationController
     kwh = halfHourlyReadings.pluck("value").map(&:to_f).sum
     cost = halfHourlyReadings.pluck("costEstimate").map(&:to_i).sum
 
-<<<<<<< Updated upstream
-    "#{start_at}から#{end_at}までの電力消費量は#{kwh}kWhで#{cost}円です。"
-=======
     "#{cost}円 #{(1..(cost / 100)).map{"💸"}.join} #{start_at}から#{end_at}までの電力消費量は#{kwh}kWhでした。"
->>>>>>> Stashed changes
   end
 end
 
